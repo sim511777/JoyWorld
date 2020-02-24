@@ -42,15 +42,12 @@ namespace JoyWorld {
 
         // 입력 처리
         private void ProcessInput() {
-            this.keyInfo = string.Empty;
-            if (Keyboard.IsKeyDown(Key.W))
-                this.keyInfo += "W ";
-            if (Keyboard.IsKeyDown(Key.S))
-                this.keyInfo += "S ";
-            if (Keyboard.IsKeyDown(Key.A))
-                this.keyInfo += "A ";
-            if (Keyboard.IsKeyDown(Key.D))
-                this.keyInfo += "D ";
+            var keys = (Key[])Enum.GetValues(typeof(Key));
+            this.keyInfo = string.Join(",", keys.Where(key => key != Key.None && Keyboard.IsKeyDown(key)));
+            this.keyInfo += Environment.NewLine;
+            this.keyInfo += Control.MouseButtons;
+            this.keyInfo += Environment.NewLine;
+            this.keyInfo += this.pbxDraw.PointToClient(Control.MousePosition);
         }
 
         // 프레임 갱신
